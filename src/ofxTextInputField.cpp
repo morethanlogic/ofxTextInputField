@@ -333,12 +333,20 @@ void ofxTextInputField::mouseReleased(ofMouseEventArgs& args){
 
 void ofxTextInputField::setClipboard(string clippy)
 {
+#if defined(TARGET_OSX)
 	glfwSetClipboardString( (GLFWwindow*) ofGetWindowPtr()->getCocoaWindow(), clippy.c_str());
+#elif defined(TARGET_WIN32)
+	glfwSetClipboardString( (GLFWwindow*) ofGetWindowPtr()->getWin32Window(), clippy.c_str());
+#endif
 }
 
 string ofxTextInputField::getClipboard()
 {
+#if defined(TARGET_OSX)
 	const char *clip = glfwGetClipboardString((GLFWwindow*) ofGetWindowPtr()->getCocoaWindow());
+#elif defined(TARGET_WIN32)
+	const char *clip = glfwGetClipboardString((GLFWwindow*) ofGetWindowPtr()->getWin32Window());
+#endif
 	if(clip!=NULL) {
 		return string(clip);
 	} else {
@@ -359,9 +367,13 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
     if(key == OF_KEY_SHIFT) {
         isShifted = true;
     }
-    
-    if(key == 4352) {
-        isCommand = true;
+
+#if defined(TARGET_OSX)
+	if(key == OF_KEY_COMMAND) {  // EZ: or 4532, test this on Mac
+#elif defined(TARGET_WIN32)
+	if(key == OF_KEY_CONTROL) {
+#endif
+		isCommand = true;
     }
 	
     #ifdef USE_GLFW_CLIPBOARD
@@ -559,7 +571,11 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 void ofxTextInputField::keyReleased(ofKeyEventArgs &a)
 {
     
-    if(a.key == 4352) {
+#if defined(TARGET_OSX)
+	if(a.key == OF_KEY_COMMAND) {  // EZ: or 4532, test this on Mac
+#elif defined(TARGET_WIN32)
+	if(a.key == OF_KEY_CONTROL) {
+#endif
         isCommand = false;
     }
 
