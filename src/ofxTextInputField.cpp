@@ -44,7 +44,9 @@ ofxTextInputField::ofxTextInputField() {
 	selectionBegin = 0;
 	selectionEnd = 0;
 	selecting = false;
-	
+
+	isCommand = false;
+	isShifted = false;
 	
 	fontRef = NULL;
     isEnabled = false;
