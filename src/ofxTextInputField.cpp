@@ -126,7 +126,8 @@ void ofxTextInputField::beginEditing() {
 void ofxTextInputField::endEditing() {
     if(isEditing){
         ofRemoveListener(ofEvents().keyPressed, this, &ofxTextInputField::keyPressed);
-        ofSendMessage(TEXTFIELD_IS_INACTIVE);
+        ofRemoveListener(ofEvents().keyReleased, this, &ofxTextInputField::keyReleased);
+		ofSendMessage(TEXTFIELD_IS_INACTIVE);
         ofNotifyEvent(textChanged, text, this);
         isEditing = false;
         drawCursor = false;
