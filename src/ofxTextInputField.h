@@ -69,6 +69,7 @@ class ofxTextInputField {
     void draw();
 	void clear();
 	
+	string placeholderText;
 	string text;
 	int cursorPosition;
 	

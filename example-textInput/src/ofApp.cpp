@@ -6,11 +6,11 @@ ofTrueTypeFont font;
 void ofApp::setup() {
     
 	monoLineTextInput.setup();
-	monoLineTextInput.text = "hello world";
+	monoLineTextInput.placeholderText = "type here";
     monoLineTextInput.bounds.x = 100;
     monoLineTextInput.bounds.y = 100;
 	monoLineTextInput.bounds.height = 40;
-		monoLineTextInput.bounds.width = 188;
+	monoLineTextInput.bounds.width = 188;
 	multilineTextInput.setup();
 	
 	multilineTextInput.text = "0: #include \"testApp.h\"\n"

@@ -37,6 +37,7 @@ ofxTextInputField::ofxTextInputField() {
     shiftMap[93] = '}';
     shiftMap[96] = '~';
     
+	placeholderText = "";
 	text = "";
 	multiline = false;
 	autoTab = true;
@@ -230,6 +231,10 @@ void ofxTextInputField::draw() {
 			   cursorPos, cursorBottom);
         ofPopStyle();
     }
+	else if (placeholderText != "" && text == "") {
+		ofSetColor(ofColor::gray);
+		fontRef->drawString(placeholderText, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
+	}
 	
 	fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
 	
