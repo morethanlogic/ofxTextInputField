@@ -63,7 +63,8 @@ class ofxTextInputField {
 	
     //can be set manually or otherwise is controlled by enable/disable
     bool drawCursor;
-    
+    bool drawBounds;
+
     ofRectangle bounds;
 	
     void draw();
@@ -75,6 +76,7 @@ class ofxTextInputField {
 	ofColor textColor;
 	ofColor placeholderColor;
 	ofColor selectionColor;
+	ofColor boundsColor;
 	
 	int cursorPosition;
 	int selectionBegin;

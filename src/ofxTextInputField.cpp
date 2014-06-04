@@ -43,6 +43,7 @@ ofxTextInputField::ofxTextInputField() {
 	placeholderColor.set(ofColor::gray);
 	textColor.set(ofColor::white);
 	selectionColor.setHex(0x6988db);
+	boundsColor.set(ofColor::white);
 
 	multiline = false;
 	autoTab = true;
@@ -60,6 +61,7 @@ ofxTextInputField::ofxTextInputField() {
     bounds = ofRectangle(0,0,100,22);
 	
     drawCursor = false;
+	drawBounds = true;
 	autoClear = false;
 	mouseDownInRect = false;
 
@@ -148,18 +150,18 @@ bool ofxTextInputField::getIsEnabled(){
 
 void ofxTextInputField::draw() {
     
+	if (drawBounds) {
+		ofPushStyle();
+		ofNoFill();
+		ofSetColor(boundsColor);
+		ofRect(bounds);
+		ofPopStyle();
+	}
+
 	ofPushMatrix();
 	ofTranslate(bounds.x, bounds.y);
 
-	
-	
-	
-
-
-	
 	if(selecting) {
-		
-
 		ofPushStyle();
 		// argh, splitting all the time.
 		vector<string> lines = ofSplitString(text, "\n");
@@ -201,10 +203,10 @@ void ofxTextInputField::draw() {
 		}
 		ofPopStyle();
 		
-		
-		//draw cursor line
-    } else if(drawCursor) {
-        ofPushStyle();
+	} 
+	//draw cursor line
+    else if(drawCursor) {
+		ofPushStyle();
 		// cursor should only blink when its been idle, and animation
 		// should be a clipped sine wave
         float timeFrac = 0.5 * ofClamp(cos(6.0f * (ofGetElapsedTimef()-lastTimeCursorMoved))*4, -1, 1) + 0.5;
@@ -226,9 +228,6 @@ void ofxTextInputField::draw() {
 		int cursorTop = VERTICAL_PADDING + fontRef->getLineHeight()*cursorY;
 		int cursorBottom = cursorTop + fontRef->getLineHeight();
 		
-		
-		
-		
 		ofSetLineWidth(1.0f);
 		//TODO: multiline with fontRef
         ofLine(cursorPos, cursorTop,
@@ -242,8 +241,6 @@ void ofxTextInputField::draw() {
 	
 	ofSetColor(textColor);
 	fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
-	
-	
 	
 	ofPopMatrix();
 }

@@ -54,11 +54,7 @@ void ofApp::update() {
 void ofApp::draw() {
     ofBackground(255*.15);
     
-    ofSetColor(255);
-    ofRect(monoLineTextInput.bounds);
-	ofRect(multilineTextInput.bounds);
-    ofNoFill();
-	monoLineTextInput.draw();
+    monoLineTextInput.draw();
 	multilineTextInput.draw();
     
 }
