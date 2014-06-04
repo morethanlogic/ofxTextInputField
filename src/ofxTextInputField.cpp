@@ -39,6 +39,11 @@ ofxTextInputField::ofxTextInputField() {
     
 	placeholderText = "";
 	text = "";
+
+	placeholderColor.set(ofColor::gray);
+	textColor.set(ofColor::white);
+	selectionColor.setHex(0x6988db);
+
 	multiline = false;
 	autoTab = true;
 	cursorPosition = 0;
@@ -166,7 +171,7 @@ void ofxTextInputField::draw() {
 		float startX = fontRef->stringWidth(lines[beginCursorY].substr(0,beginCursorX));
 		float endX = fontRef->stringWidth(lines[endCursorY].substr(0, endCursorX));
 
-		ofSetHexColor(0x6988db);
+		ofSetColor(selectionColor);
 		ofFill();
 		
 		if(beginCursorY==endCursorY) {
@@ -204,8 +209,7 @@ void ofxTextInputField::draw() {
 		// should be a clipped sine wave
         float timeFrac = 0.5 * ofClamp(cos(6.0f * (ofGetElapsedTimef()-lastTimeCursorMoved))*4, -1, 1) + 0.5;
         
-        ofColor col = ofGetStyle().color;
-		ofSetColor(col.r * timeFrac, col.g * timeFrac, col.b * timeFrac);
+        ofSetColor(textColor.r * timeFrac, textColor.g * timeFrac, textColor.b * timeFrac, textColor.a);
 		
 		
 		// argh, splitting all the time.
@@ -232,10 +236,11 @@ void ofxTextInputField::draw() {
         ofPopStyle();
     }
 	else if (placeholderText != "" && text == "") {
-		ofSetColor(ofColor::gray);
+		ofSetColor(placeholderColor);
 		fontRef->drawString(placeholderText, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
 	}
 	
+	ofSetColor(textColor);
 	fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
 	
 	

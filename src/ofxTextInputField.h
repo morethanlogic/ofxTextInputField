@@ -69,10 +69,14 @@ class ofxTextInputField {
     void draw();
 	void clear();
 	
-	string placeholderText;
 	string text;
-	int cursorPosition;
+	string placeholderText;
 	
+	ofColor textColor;
+	ofColor placeholderColor;
+	ofColor selectionColor;
+	
+	int cursorPosition;
 	int selectionBegin;
 	int selectionEnd;
 	bool selecting;

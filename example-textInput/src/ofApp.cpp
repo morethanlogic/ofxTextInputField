@@ -7,6 +7,9 @@ void ofApp::setup() {
     
 	monoLineTextInput.setup();
 	monoLineTextInput.placeholderText = "type here";
+	monoLineTextInput.textColor = ofColor::blueSteel;
+	monoLineTextInput.placeholderColor.set(255, 64);
+	monoLineTextInput.selectionColor = ofColor::antiqueWhite;
     monoLineTextInput.bounds.x = 100;
     monoLineTextInput.bounds.y = 100;
 	monoLineTextInput.bounds.height = 40;
