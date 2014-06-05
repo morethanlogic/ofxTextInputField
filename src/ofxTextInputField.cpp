@@ -46,6 +46,7 @@ ofxTextInputField::ofxTextInputField() {
 	boundsColor.set(ofColor::white);
 
 	multiline = false;
+	autoEdit = true;
 	autoTab = true;
 	cursorPosition = 0;
 	selectionBegin = 0;
@@ -320,6 +321,7 @@ void ofxTextInputField::mouseDragged(ofMouseEventArgs& args) {
 }
 
 void ofxTextInputField::mouseReleased(ofMouseEventArgs& args){
+	if (!autoEdit) return;
 
     if(bounds.inside(args.x, args.y)) {
         if(!isEditing && mouseDownInRect){

@@ -89,6 +89,7 @@ class ofxTextInputField {
 	
 	bool autoClear;
 	bool autoTab;
+	bool autoEdit;
 	
 	bool multiline;
     
