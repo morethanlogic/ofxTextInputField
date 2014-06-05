@@ -110,7 +110,7 @@ void ofxTextInputField::beginEditing() {
     if(!isEditing){
         ofAddListener(ofEvents().keyPressed, this, &ofxTextInputField::keyPressed);
         ofAddListener(ofEvents().keyReleased, this, &ofxTextInputField::keyReleased);
-        ofSendMessage(TEXTFIELD_IS_ACTIVE);
+		ofNotifyEvent(editingBegan, this);
         isEditing = true;
         drawCursor = true;
 		if(autoClear){
@@ -127,8 +127,7 @@ void ofxTextInputField::endEditing() {
     if(isEditing){
         ofRemoveListener(ofEvents().keyPressed, this, &ofxTextInputField::keyPressed);
         ofRemoveListener(ofEvents().keyReleased, this, &ofxTextInputField::keyReleased);
-		ofSendMessage(TEXTFIELD_IS_INACTIVE);
-        ofNotifyEvent(textChanged, text, this);
+		ofNotifyEvent(editingEnded, this);
         isEditing = false;
         drawCursor = false;
     }
@@ -450,6 +449,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 			}
 		}
 
+		ofNotifyEvent(textChanged, text, this);
         return;
 	}
 	
@@ -469,6 +469,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
             text.insert(text.begin()+cursorPosition, key);
         }
 		cursorPosition++;
+
+		ofNotifyEvent(textChanged, text, this);
 	}
 	
 	
@@ -485,6 +487,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				--cursorPosition;
 			}
 		}
+
+		ofNotifyEvent(textChanged, text, this);
 	}
 	
 	if (key==OF_KEY_DEL) {
@@ -499,6 +503,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				text.erase(text.begin()+cursorPosition);
 			}
 		}
+
+		ofNotifyEvent(textChanged, text, this);
 	}
 	
 	if (key==OF_KEY_LEFT){

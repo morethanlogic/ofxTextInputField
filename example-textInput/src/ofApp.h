@@ -21,7 +21,10 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-	
+
+		void editingBegan(const void* sender);
+		void editingEnded(const void* sender);
+		void textChanged(const void* sender, string& text);
 	
 		ofxTextInputField monoLineTextInput, multilineTextInput;
 		

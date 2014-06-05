@@ -31,9 +31,6 @@
 #include OFX_TEXTFIELD_FONT_INCLUDE
 #endif
 
-#define TEXTFIELD_IS_ACTIVE "textfieldIsActive"
-#define TEXTFIELD_IS_INACTIVE "textfieldIsInactive"
-
 #ifdef OF_VERSION_MINOR
 #if OF_VERSION_MINOR>=8 || OF_VERSION_MAJOR>0
 #define USE_GLFW_CLIPBOARD
@@ -83,7 +80,10 @@ class ofxTextInputField {
 	int selectionEnd;
 	bool selecting;
 	
+	ofEvent<void> editingBegan;
+	ofEvent<void> editingEnded;
 	ofEvent<string> textChanged;
+
 	void keyPressed(ofKeyEventArgs &a);
     void keyReleased(ofKeyEventArgs &a);
 	

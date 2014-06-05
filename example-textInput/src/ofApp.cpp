@@ -43,6 +43,10 @@ void ofApp::setup() {
 	multilineTextInput.bounds.height = 500;
 	multilineTextInput.multiline = true;
 	
+	// Add event listeners.
+	ofAddListener(monoLineTextInput.editingBegan, this, &ofApp::editingBegan);
+	ofAddListener(monoLineTextInput.editingEnded, this, &ofApp::editingEnded);
+	ofAddListener(monoLineTextInput.textChanged, this, &ofApp::textChanged);
 }
 
 //--------------------------------------------------------------
@@ -102,4 +106,19 @@ void ofApp::gotMessage(ofMessage msg) {
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo) { 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::editingBegan(const void* sender) { 
+	cout << "Editing began with text: " << ((ofxTextInputField *)sender)->text << endl;
+}
+
+//--------------------------------------------------------------
+void ofApp::editingEnded(const void* sender) { 
+	cout << "Editing ended with text: " << ((ofxTextInputField *)sender)->text << endl;
+}
+
+//--------------------------------------------------------------
+void ofApp::textChanged(const void* sender, string& text) { 
+	cout << "Text changed to: " << text << endl;
 }
