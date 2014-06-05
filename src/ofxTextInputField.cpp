@@ -386,7 +386,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 		isCommand = true;
     }
 	
-    #ifdef USE_GLFW_CLIPBOARD
+#ifdef USE_GLFW_CLIPBOARD
     if(key == 'c' && isCommand ) {
         setClipboard(text.substr(selectionBegin, selectionEnd - selectionBegin));
         return;
@@ -396,7 +396,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
         text.insert(cursorPosition, getClipboard());
         return;
     }
-	#endif
+#endif
     
 	if ((key >=32 && key <=126) || key=='\t' || key==OF_KEY_RETURN) {
 		if(selecting) {
@@ -572,10 +572,6 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 			}
 		}
 	}
-	
-	
-	
-	
 }
 
 void ofxTextInputField::keyReleased(ofKeyEventArgs &a)

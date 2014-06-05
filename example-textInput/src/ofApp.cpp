@@ -14,9 +14,12 @@ void ofApp::setup() {
     monoLineTextInput.bounds.y = 100;
 	monoLineTextInput.bounds.height = 40;
 	monoLineTextInput.bounds.width = 188;
-	multilineTextInput.setup();
+	font.loadFont(OF_TTF_SERIF, 18);
+	monoLineTextInput.setFont(font);
 	
-	multilineTextInput.text = "0: #include \"testApp.h\"\n"
+	multilineTextInput.setup();
+	multilineTextInput.text = 
+	"0: #include \"testApp.h\"\n"
 	"1: \n"
 	"2: //--------------------------------------------------------------\n"
 	"3: void testApp::setup() {\n"
@@ -39,9 +42,6 @@ void ofApp::setup() {
 	multilineTextInput.bounds.width = 400;
 	multilineTextInput.bounds.height = 500;
 	multilineTextInput.multiline = true;
-	font.loadFont(OF_TTF_SERIF, 18);
-	monoLineTextInput.setFont(font);
-	
 	
 }
 
