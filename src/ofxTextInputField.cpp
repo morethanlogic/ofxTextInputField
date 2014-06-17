@@ -455,26 +455,6 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
         return;
 	}
 	
-	if ((key >=32 && key <=126) || key=='\t') {
-        
-        if(isShifted) {
-            
-            char toInsert;
-            if( !(key > 96 && key < 123) && !(key > 65 && key < 90) && shiftMap.find(key) != shiftMap.end() ) {
-                toInsert = shiftMap[key];//toInsert = key - 32;
-            } else {
-                toInsert = key;
-            }
-            
-            text.insert(text.begin()+cursorPosition, toInsert);
-        } else {
-            text.insert(text.begin()+cursorPosition, key);
-        }
-		cursorPosition++;
-
-		ofNotifyEvent(textChanged, text, this);
-	}
-	
 	
 	if (key==OF_KEY_BACKSPACE) {
 		if(selecting) {
@@ -491,6 +471,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 		}
 
 		ofNotifyEvent(textChanged, text, this);
+		return;
 	}
 	
 	if (key==OF_KEY_DEL) {
@@ -507,6 +488,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 		}
 
 		ofNotifyEvent(textChanged, text, this);
+		return;
 	}
 	
 	if (key==OF_KEY_LEFT){
@@ -519,10 +501,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				--cursorPosition;
 			}
 		}
+		return;
 	}
-	
-	
-	
 	if (key==OF_KEY_RIGHT){
 		if(selecting) {
 			cursorPosition = selectionEnd;
@@ -532,9 +512,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				++cursorPosition;
 			}
 		}
+		return;
 	}
-	
-	
 	if (key==OF_KEY_UP){
 		if(selecting) {
 			cursorPosition = selectionBegin;
@@ -556,10 +535,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				}
 			}
 		}
+		return;
 	}
-	
-	
-	
 	if (key==OF_KEY_DOWN){
 		if(selecting) {
 			cursorPosition = selectionEnd;
@@ -579,7 +556,30 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				cursorPosition = text.size()-1;
 			}
 		}
+		return;
 	}
+
+	
+	
+	//if ((key >=32 && key <=126) || key=='\t') {
+ //       
+ //       if(isShifted) {
+ //           
+ //           char toInsert;
+ //           if( !(key > 96 && key < 123) && !(key > 65 && key < 90) && shiftMap.find(key) != shiftMap.end() ) {
+ //               toInsert = shiftMap[key];//toInsert = key - 32;
+ //           } else {
+ //               toInsert = key;
+ //           }
+ //           
+ //           text.insert(text.begin()+cursorPosition, toInsert);
+ //       } else {
+            text.insert(text.begin()+cursorPosition, key);
+        //}
+		cursorPosition++;
+
+		ofNotifyEvent(textChanged, text, this);
+	//}
 }
 
 void ofxTextInputField::keyReleased(ofKeyEventArgs &a)
