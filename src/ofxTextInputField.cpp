@@ -373,9 +373,8 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 	//jg: made a step closer to this with swappable renderers and ofxFTGL -- but need unicode text input...
 	lastTimeCursorMoved = ofGetElapsedTimef();
 	int key = args.key;
-	
-	
-    if(key == OF_KEY_SHIFT) {
+		
+    if(key == OF_KEY_SHIFT || key == OF_KEY_LEFT_SHIFT || key == OF_KEY_RIGHT_SHIFT) {
         isShifted = true;
         return;
     }
