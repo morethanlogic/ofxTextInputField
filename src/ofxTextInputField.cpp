@@ -377,6 +377,7 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 	
     if(key == OF_KEY_SHIFT) {
         isShifted = true;
+        return;
     }
 
 #if defined(TARGET_OSX)
