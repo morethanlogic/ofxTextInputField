@@ -69,6 +69,7 @@ ofxTextInputField::ofxTextInputField() {
 	fontRef = new ofxTextInput::BitmapFontRenderer();
     //isSetup = false;
 	
+    textAlignment = TextAlignmentLeft;
 	verticalPadding = 12;
 	horizontalPadding = 10;
 	lastTimeCursorMoved = ofGetElapsedTimef();
@@ -139,6 +140,10 @@ void ofxTextInputField::setFont(OFX_TEXTFIELD_FONT_RENDERER& font){
 		delete fontRef;
 	}
 	fontRef = new ofxTextInput::TypedFontRenderer(&font);
+}
+
+void ofxTextInputField::setTextAlignment(TextAlignment alignment){
+    textAlignment = alignment;
 }
 
 void ofxTextInputField::setHorizontalPadding(int val){
@@ -230,8 +235,13 @@ void ofxTextInputField::draw() {
 		int cursorX, cursorY;
         getCursorCoords(cursorPosition, cursorX, cursorY);
 	//	printf("Pos: %d    X: %d   Y: %d\n", cursorPosition, cursorX, cursorY);
-		int cursorPos = HORIZONTAL_PADDING + fontRef->stringWidth(lines[cursorY].substr(0,cursorX));
         
+        float textWidth = fontRef->stringWidth(text);
+		int cursorPos = horizontalPadding + fontRef->stringWidth(lines[cursorY].substr(0,cursorX));
+        
+        if (textAlignment == TextAlignmentCenter) {
+            cursorPos += bounds.width/2 - textWidth * 0.5f;
+        }
         
 		int cursorTop = VERTICAL_PADDING + fontRef->getLineHeight()*cursorY;
 		int cursorBottom = cursorTop + fontRef->getLineHeight();
@@ -244,12 +254,26 @@ void ofxTextInputField::draw() {
     }
 	else if (placeholderText != "" && text == "") {
 		ofSetColor(placeholderColor);
-		fontRef->drawString(placeholderText, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
+        
+        if (textAlignment == TextAlignmentLeft) {
+            fontRef->drawString(placeholderText, horizontalPadding, fontRef->getLineHeight()+verticalPadding);
+        }
+        else if (textAlignment == TextAlignmentCenter) {
+            float placeholderTextWidth = fontRef->stringWidth(placeholderText);
+            fontRef->drawString(placeholderText, bounds.width/2 - placeholderTextWidth * 0.5f , fontRef->getLineHeight()+verticalPadding);
+        }
 	}
 	
 	ofSetColor(textColor);
-	fontRef->drawString(text, HORIZONTAL_PADDING, fontRef->getLineHeight()+VERTICAL_PADDING);
-	
+    
+    if (textAlignment == TextAlignmentLeft) {
+        fontRef->drawString(text, horizontalPadding, fontRef->getLineHeight()+verticalPadding + capsVerticalOffset);
+    }
+    else if (textAlignment == TextAlignmentCenter) {
+        float textWidth = fontRef->stringWidth(text);
+        fontRef->drawString(text, bounds.width/2 - textWidth * 0.5f , fontRef->getLineHeight()+verticalPadding);
+    }
+    
 	ofPopMatrix();
 }
 

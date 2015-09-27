@@ -43,12 +43,20 @@
 
 class ofxTextInputField {
   public:
+    enum TextAlignment
+    {
+        TextAlignmentLeft,
+        TextAlignmentCenter
+    };
+    
 	ofxTextInputField();
 	virtual ~ofxTextInputField();
 	//swap in a font!
 	void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
     
     void setup();
+    
+    void setTextAlignment(TextAlignment alignment);
     void setHorizontalPadding(int val);
     void setVerticalPadding(int val);
 	
@@ -101,6 +109,8 @@ class ofxTextInputField {
 #endif
 	
   protected:
+    TextAlignment textAlignment;
+    
 	float lastTimeCursorMoved;
 	int verticalPadding;
     int capsVerticalOffset;
