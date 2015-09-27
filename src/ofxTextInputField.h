@@ -115,6 +115,7 @@ class ofxTextInputField {
 	float lastTimeCursorMoved;
 	int verticalPadding;
     int capsVerticalOffset;
+	int horizontalPadding;
 	ofxTextInput::FontRenderer* fontRef;
 	
     bool 	isEnabled;

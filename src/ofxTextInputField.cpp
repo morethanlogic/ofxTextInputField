@@ -197,26 +197,26 @@ void ofxTextInputField::draw() {
 		
 		if(beginCursorY==endCursorY) {
 			// single line selection
-			ofRect(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
+			ofRect(horizontalPadding + startX, verticalPadding + fontRef->getLineHeight()*beginCursorY,
 				   endX - startX, fontRef->getLineHeight());
 		} else {
 			
 			// multiline selection.
 			// do first line to the end
-			ofRect(HORIZONTAL_PADDING + startX, VERTICAL_PADDING + fontRef->getLineHeight()*beginCursorY,
+			ofRect(horizontalPadding + startX, verticalPadding + fontRef->getLineHeight()*beginCursorY,
 				   fontRef->stringWidth(lines[beginCursorY]) - startX,
 				   fontRef->getLineHeight()
 			);
 			
 			// loop through entirely selected lines
 			for(int i = beginCursorY + 1; i < endCursorY; i++) {
-				ofRect(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*i,
+				ofRect(horizontalPadding, verticalPadding + fontRef->getLineHeight()*i,
 					   fontRef->stringWidth(lines[i]),
 					   fontRef->getLineHeight()
 				);
 			}
 			// do last line up to endX
-			ofRect(HORIZONTAL_PADDING, VERTICAL_PADDING + fontRef->getLineHeight()*endCursorY,
+			ofRect(horizontalPadding, verticalPadding + fontRef->getLineHeight()*endCursorY,
 					endX, fontRef->getLineHeight()
 			);
 		}
@@ -249,7 +249,7 @@ void ofxTextInputField::draw() {
             cursorPos += bounds.width/2 - textWidth * 0.5f;
         }
         
-		int cursorTop = VERTICAL_PADDING + fontRef->getLineHeight()*cursorY;
+		int cursorTop = verticalPadding + fontRef->getLineHeight()*cursorY;
 		int cursorBottom = cursorTop + fontRef->getLineHeight();
 		
 		ofSetLineWidth(1.0f);
@@ -314,7 +314,7 @@ void ofxTextInputField::setCursorPositionFromXY() {
 int ofxTextInputField::getCursorPositionFromMouse(int x, int y) {
 	int cursorX = 0;
 	int cursorY = 0;
-	float pos = y - bounds.y - VERTICAL_PADDING;
+	float pos = y - bounds.y - verticalPadding;
 	pos /= fontRef->getLineHeight();
 	int line = pos;
 	cursorY = line;
@@ -322,7 +322,7 @@ int ofxTextInputField::getCursorPositionFromMouse(int x, int y) {
 	vector<string> lines = ofSplitString(text, "\n");
 	if(cursorY>=lines.size()-1) cursorY = lines.size()-1;
 	if(lines.size()>0) {
-		cursorX = fontRef->getPosition(lines[cursorY], x - HORIZONTAL_PADDING - bounds.x);
+		cursorX = fontRef->getPosition(lines[cursorY], x - horizontalPadding - bounds.x);
 	}
 	int c = 0;
 	for(int i = 0; i < cursorY; i++) {
