@@ -71,6 +71,7 @@ ofxTextInputField::ofxTextInputField() {
 	
     textAlignment = TextAlignmentLeft;
 	verticalPadding = 12;
+    capsVerticalOffset = 0;
 	horizontalPadding = 10;
 	lastTimeCursorMoved = ofGetElapsedTimef();
 }
@@ -153,6 +154,11 @@ void ofxTextInputField::setHorizontalPadding(int val){
 void ofxTextInputField::setVerticalPadding(int val){
     verticalPadding = val;
 }
+
+void ofxTextInputField::setCapsVerticalOffset(int val){
+    capsVerticalOffset = val;
+}
+
 bool ofxTextInputField::getIsEditing(){
     return isEditing;
 }

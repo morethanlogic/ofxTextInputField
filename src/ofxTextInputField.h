@@ -59,6 +59,7 @@ class ofxTextInputField {
     void setTextAlignment(TextAlignment alignment);
     void setHorizontalPadding(int val);
     void setVerticalPadding(int val);
+    void setCapsVerticalOffset(int val);
 	
 	void enable();
 	void disable();
