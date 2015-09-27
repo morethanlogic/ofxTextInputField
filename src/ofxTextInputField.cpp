@@ -69,8 +69,8 @@ ofxTextInputField::ofxTextInputField() {
 	fontRef = new ofxTextInput::BitmapFontRenderer();
     //isSetup = false;
 	
-	VERTICAL_PADDING = 12;
-	HORIZONTAL_PADDING = 10;
+	verticalPadding = 12;
+	horizontalPadding = 10;
 	lastTimeCursorMoved = ofGetElapsedTimef();
 }
 
@@ -141,6 +141,13 @@ void ofxTextInputField::setFont(OFX_TEXTFIELD_FONT_RENDERER& font){
 	fontRef = new ofxTextInput::TypedFontRenderer(&font);
 }
 
+void ofxTextInputField::setHorizontalPadding(int val){
+    horizontalPadding = val;
+}
+
+void ofxTextInputField::setVerticalPadding(int val){
+    verticalPadding = val;
+}
 bool ofxTextInputField::getIsEditing(){
     return isEditing;
 }

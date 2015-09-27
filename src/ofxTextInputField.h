@@ -49,6 +49,8 @@ class ofxTextInputField {
 	void setFont(OFX_TEXTFIELD_FONT_RENDERER& font);
     
     void setup();
+    void setHorizontalPadding(int val);
+    void setVerticalPadding(int val);
 	
 	void enable();
 	void disable();
@@ -100,8 +102,8 @@ class ofxTextInputField {
 	
   protected:
 	float lastTimeCursorMoved;
-	int VERTICAL_PADDING;
-	int HORIZONTAL_PADDING;
+	int verticalPadding;
+    int capsVerticalOffset;
 	ofxTextInput::FontRenderer* fontRef;
 	
     bool 	isEnabled;
