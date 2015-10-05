@@ -240,17 +240,27 @@ void ofxTextInputField::draw() {
 		// calculate this every loop.
 		int cursorX, cursorY;
         getCursorCoords(cursorPosition, cursorX, cursorY);
+        
+        
 	//	printf("Pos: %d    X: %d   Y: %d\n", cursorPosition, cursorX, cursorY);
         
-        float textWidth = fontRef->stringWidth(text);
+        float textWidth = 0;
+        if (text.length() > 0) {
+            textWidth = fontRef->stringWidth(text);
+        }
 		int cursorPos = horizontalPadding + fontRef->stringWidth(lines[cursorY].substr(0,cursorX));
+        
+        if (cursorPos < 0) {
+            cursorPos = 0;
+        }
         
         if (textAlignment == TextAlignmentCenter) {
             cursorPos += bounds.width/2 - textWidth * 0.5f;
         }
         
+        
 		int cursorTop = verticalPadding + fontRef->getLineHeight()*cursorY;
-		int cursorBottom = cursorTop + fontRef->getLineHeight();
+        int cursorBottom = bounds.height - verticalPadding;
 		
 		ofSetLineWidth(1.0f);
 		//TODO: multiline with fontRef
