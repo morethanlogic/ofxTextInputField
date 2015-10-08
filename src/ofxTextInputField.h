@@ -68,6 +68,8 @@ class ofxTextInputField {
 	bool getIsEditing();
 	void beginEditing();
 	void endEditing();
+    
+    void setIsPhoneNumber(bool val);
 	
     //can be set manually or otherwise is controlled by enable/disable
     bool drawCursor;
@@ -136,4 +138,6 @@ class ofxTextInputField {
     
     bool isShifted, isCommand;
     map<int, char> shiftMap;
+    
+    bool bIsPhoneNumber;
 };

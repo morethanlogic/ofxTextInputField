@@ -74,6 +74,8 @@ ofxTextInputField::ofxTextInputField() {
     capsVerticalOffset = 0;
 	horizontalPadding = 10;
 	lastTimeCursorMoved = ofGetElapsedTimef();
+    
+    bIsPhoneNumber = false;
 }
 
 ofxTextInputField::~ofxTextInputField(){
@@ -621,9 +623,16 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
  //           
  //           text.insert(text.begin()+cursorPosition, toInsert);
  //       } else {
-            text.insert(text.begin()+cursorPosition, key);
+        text.insert(text.begin()+cursorPosition, key);
+        cursorPosition++;
+
+        if (bIsPhoneNumber) {
+            if (text.size() == 3 || text.size() == 7) {
+                text.insert(text.begin()+cursorPosition, 45);
+                cursorPosition++;
+            }
+        }
         //}
-		cursorPosition++;
 
 		ofNotifyEvent(textChanged, text, this);
 	//}
@@ -648,4 +657,9 @@ void ofxTextInputField::keyReleased(ofKeyEventArgs &a)
 void ofxTextInputField::clear() {
 	text.clear();
 	cursorPosition = 0;
+}
+    
+void ofxTextInputField::setIsPhoneNumber(bool val)
+{
+    bIsPhoneNumber = val;
 }
