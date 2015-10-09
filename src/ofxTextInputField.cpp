@@ -170,7 +170,7 @@ bool ofxTextInputField::getIsEnabled(){
 	return isEnabled;
 }
 
-void ofxTextInputField::draw() {
+void ofxTextInputField::draw(bool bUseBoundsCoord) {
     
 	if (drawBounds) {
 		ofPushStyle();
@@ -181,7 +181,10 @@ void ofxTextInputField::draw() {
 	}
 
 	ofPushMatrix();
-	ofTranslate(bounds.x, bounds.y);
+    
+    if (bUseBoundsCoord) {
+        ofTranslate(bounds.x, bounds.y);
+    }
 
 	if(selecting) {
 		ofPushStyle();

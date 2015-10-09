@@ -77,7 +77,7 @@ class ofxTextInputField {
 
     ofRectangle bounds;
 	
-    void draw();
+    void draw(bool bUseBoundsCoord = true);
 	void clear();
 	
 	string text;
