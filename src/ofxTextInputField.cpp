@@ -13,6 +13,7 @@
 //
 
 #include "ofxTextInputField.h"
+#include <regex>
 
 
 ofxTextInputField::ofxTextInputField() {
@@ -92,9 +93,9 @@ void ofxTextInputField::setup(){
 
 void ofxTextInputField::enable(){
 	if(!isEnabled){
-		ofAddListener(ofEvents().mousePressed, this, &ofxTextInputField::mousePressed);
-		ofAddListener(ofEvents().mouseDragged, this, &ofxTextInputField::mouseDragged);
-		ofAddListener(ofEvents().mouseReleased, this, &ofxTextInputField::mouseReleased);
+//		ofAddListener(ofEvents().mousePressed, this, &ofxTextInputField::mousePressed);
+//		ofAddListener(ofEvents().mouseDragged, this, &ofxTextInputField::mouseDragged);
+//		ofAddListener(ofEvents().mouseReleased, this, &ofxTextInputField::mouseReleased);
 		isEnabled = true;
 	}
 }
@@ -104,9 +105,9 @@ void ofxTextInputField::disable(){
 		endEditing();
 	}
 	if(isEnabled){
-        ofRemoveListener(ofEvents().mousePressed, this, &ofxTextInputField::mousePressed);
-		ofRemoveListener(ofEvents().mouseDragged, this, &ofxTextInputField::mouseDragged);
-		ofRemoveListener(ofEvents().mouseReleased, this, &ofxTextInputField::mouseReleased);
+//        ofRemoveListener(ofEvents().mousePressed, this, &ofxTextInputField::mousePressed);
+//		ofRemoveListener(ofEvents().mouseDragged, this, &ofxTextInputField::mouseDragged);
+//		ofRemoveListener(ofEvents().mouseReleased, this, &ofxTextInputField::mouseReleased);
 		isEnabled = false;
     }
 	
@@ -259,7 +260,6 @@ void ofxTextInputField::draw() {
         if (textAlignment == TextAlignmentCenter) {
             cursorPos += bounds.width/2 - textWidth * 0.5f;
         }
-        
         
 		int cursorTop = verticalPadding + fontRef->getLineHeight()*cursorY;
         int cursorBottom = bounds.height - verticalPadding;
@@ -418,6 +418,7 @@ string ofxTextInputField::getClipboard()
 #endif
 
 void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
+    
 	//ew: add charachter (non unicode sorry!)
 	//jg: made a step closer to this with swappable renderers and ofxFTGL -- but need unicode text input...
 	lastTimeCursorMoved = ofGetElapsedTimef();
@@ -518,6 +519,27 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				--cursorPosition;
 			}
 		}
+        
+        if (bIsPhoneNumber) {
+            if (text.size() == 13) {
+                string cleanedPhoneStr = text;
+                
+                regex regExDigit("[^0-9]");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExDigit, "");
+                
+                regex regExLeadindSpaces("^\\s+");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExLeadindSpaces, "");
+                
+                regex regExTrailingSpaces("\\s+$");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExTrailingSpaces, "");
+                
+
+                cleanedPhoneStr.insert(3, "-");
+                cleanedPhoneStr.insert(7, "-");
+                text = cleanedPhoneStr;
+                --cursorPosition;
+            }
+        }
 
 		ofNotifyEvent(textChanged, text, this);
 		return;
@@ -535,6 +557,27 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
 				text.erase(text.begin()+cursorPosition);
 			}
 		}
+        
+        if (bIsPhoneNumber) {
+            if (text.size() == 13) {
+                string cleanedPhoneStr = text;
+                
+                regex regExDigit("[^0-9]");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExDigit, "");
+                
+                regex regExLeadindSpaces("^\\s+");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExLeadindSpaces, "");
+                
+                regex regExTrailingSpaces("\\s+$");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExTrailingSpaces, "");
+                
+                
+                cleanedPhoneStr.insert(3, "-");
+                cleanedPhoneStr.insert(7, "-");
+                text = cleanedPhoneStr;
+                --cursorPosition;
+            }
+        }
 
 		ofNotifyEvent(textChanged, text, this);
 		return;
@@ -623,12 +666,38 @@ void ofxTextInputField::keyPressed(ofKeyEventArgs& args) {
  //           
  //           text.insert(text.begin()+cursorPosition, toInsert);
  //       } else {
+        
+        if ((bIsPhoneNumber && text.size() >= 13) ||
+            (bIsPhoneNumber && (key < 48 || key > 57))) {
+            return;
+        }
+        
         text.insert(text.begin()+cursorPosition, key);
         cursorPosition++;
 
         if (bIsPhoneNumber) {
             if (text.size() == 3 || text.size() == 7) {
                 text.insert(text.begin()+cursorPosition, 45);
+                cursorPosition++;
+            }
+            
+            //
+            if (text.size() == 13) {
+                string cleanedPhoneStr = text;
+                
+                regex regExDigit("[^0-9]");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExDigit, "");
+                
+                regex regExLeadindSpaces("^\\s+");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExLeadindSpaces, "");
+                
+                regex regExTrailingSpaces("\\s+$");
+                cleanedPhoneStr = regex_replace(cleanedPhoneStr, regExTrailingSpaces, "");
+                
+                cleanedPhoneStr.insert(1, " ");
+                cleanedPhoneStr.insert(5, "-");
+                cleanedPhoneStr.insert(9, "-");
+                text = cleanedPhoneStr;
                 cursorPosition++;
             }
         }
